@@ -1,10 +1,30 @@
-{% extends 'base.html' %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wishlist</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  </head>
 
+</html>
 {% block content %}
-<h5>Nama: </h5>
-<b>{{nama}}</b>
 
-<table>
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Debby Trinita</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <button><a class="btn btn -sm" aria-current="page" href="{% url 'wishlist:logout' %}">Logout</a></button>
+      </div>
+    </div>
+  </div>
+</nav>
+<br>
+<table class="table table-striped table-hover">
     <tr>
         <th>Nama Barang</th>
         <th>Harga Barang</th>
@@ -14,9 +34,9 @@
     
     {% for barang in list_barang %}
         <tr>
-            <th>{{barang.nama_barang}}</th>
-            <th>{{barang.harga_barang}}</th>
-            <th>{{barang.deskripsi}}</th>
+            <td>{{barang.nama_barang}}</td>
+            <td>{{barang.harga_barang}}</td>
+            <td>{{barang.deskripsi}}</td>
         </tr>
     
 {% endfor %}
@@ -24,8 +44,9 @@
 
 </table>
 
-<h5>Sesi terakhir login: {{ last_login }}</h5>
+<br><br><br>
+<h6>Sesi terakhir login: {{ last_login }}</h6>
 
-<button><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+
 {% endblock content %}
 
