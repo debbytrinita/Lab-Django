@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from wishlist.forms import wishlist_form
 
 
 
@@ -77,6 +78,29 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('wishlist:login'))
     response.delete_cookie('last_login')
     return response
+
+def wishlist_ajax(request):
+    context={
+        'last_login' : request.COOKIES['last_login'],
+    }
+    return(render (request, "wishlist_ajax.html",context))
+
+def add_new_wishlist(request):
+    if request.method == "POST":
+        form = wishlist_form(request.POST)
+        if form.is_valid():
+            nama_barang_user = request.POST.get('nama_barang')
+            harga_barang_user = request.POST.get('harga_barang')
+            deskripsi_user = request.POST.get('deskripsi')
+            new_wishlist = BarangWishlist(nama_barang=nama_barang_user,harga_barang=harga_barang_user,description=deskripsi_user)
+            new_wishlist.save()
+           
+            return HttpResponseRedirect(reverse('wishlist:wishlist_ajax'))
+
+    context ={
+            'form': wishlist_form
+    }
+    return render(request, 'wishlist_ajax.html', context)
 
 
 
